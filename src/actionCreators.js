@@ -4,13 +4,39 @@ const loadPosts = () => {
     return dispatch => {
         return axios.get("http://localhost:3001/posts")
         .then(response => {
-            const dataResponse = response.data.sort()
             dispatch({
-                type: "LOAD_PRODUCTS",
+                type: "LOAD_POSTS",
                 posts: response.data
             })
         }) 
     }
 }
 
-export { loadPosts };
+
+const orderForward = () => {
+    return {
+        type: "ORDER_FORWARD"  
+    }
+}
+
+const orderPostBackward = () => {
+    return {
+        type: "ORDER_BACKWARD"
+    }
+}
+
+const sumVote = post => {
+    return {
+        type: "SUM_VOTE",
+        post
+    }
+}
+
+const restVote = post => {
+    return {
+        type: "REST_VOTE",
+        post
+    }
+}
+
+export { loadPosts, orderPostBackward, orderForward, sumVote, restVote };

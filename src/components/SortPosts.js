@@ -1,6 +1,7 @@
 import React from 'react';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Button, Row, Col } from 'react-bootstrap';
+import { orderPostBackward, orderForward } from '../actionCreators';
 
 const style = {
     border: {
@@ -9,15 +10,26 @@ const style = {
     }
 };
 
-const Filter = () => {
+const Filter = ({ sortPostBackward, sortPostForward }) => {
     return (
         <Row>
             <Col>
-                Orden: <Button style={style.border}>Ascendente</Button> <Button bsStyle="primary">Descendente</Button>
+                <p>Orden: <Button bsStyle="primary" style={style.border} onClick={() => sortPostForward()}>Ascendente</Button> <Button bsStyle="primary" onClick={() => sortPostBackward()}>Descendente</Button></p>
             </Col>
         </Row> 
     )
 }
 
 
-export default Filter;
+const mapDispatchToProps = dispatch => {
+    return {
+        sortPostBackward() {
+            dispatch(orderPostBackward());
+        }, 
+        sortPostForward() {
+            dispatch(orderForward());
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Filter);
