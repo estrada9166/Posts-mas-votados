@@ -29,25 +29,28 @@ const modifyVotes = (state, action) => {
     })
 }
 
-const compareVotes = (arr, type) => {
+const compareVotes = (arr, type, post) => {
     if(type === "SUM_VOTE"){
-        return arr.concat().sort((a, b) => {
-            if(a.votes < b.votes){
-                return 1;
-            } else if(a.votes > b.votes){
-                return -1;
+        arr.forEach(function(element, index) {
+            if(JSON.stringify(element) === JSON.stringify(post) && index > 0){
+                console.log(index)
+                if(arr[index - 1]['votes'] < post['votes']){
+                    arr.splice(index, 1);
+                    arr.splice(index - 1, 0, post);
+                }
             }
-            return 0;
-        })
+        });
+        return arr;
     } else{
-        return arr.concat().sort((a, b) => {
-            if(a.votes > b.votes){
-                return 1;
-            } else if(a.votes < b.votes){
-                return -1;
+        arr.forEach(function(element, index) {
+            if(JSON.stringify(element) === JSON.stringify(post) && index < arr.length -1){
+                if(arr[index + 1]['votes'] > post['votes']){
+                    arr.splice(index, 1);
+                    arr.splice(index + 1, 0, post);
+                }
             }
-            return 0;
-        })
+        });
+        return arr;
     }
 }
 
@@ -59,9 +62,9 @@ const posts = (state=[], action) =>{
     } else if(action.type === "ORDER_BACKWARD"){
         return sortedPostsBackward(state);
     } else if(action.type === "SUM_VOTE"){
-        return compareVotes(modifyVotes(state, action), action.type);
+        return compareVotes(modifyVotes(state, action), action.type, action.post);
     } else if(action.type === "REST_VOTE"){
-        return compareVotes(modifyVotes(state, action), action.type);
+        return compareVotes(modifyVotes(state, action), action.type, action.post);
     }
 
     return state;

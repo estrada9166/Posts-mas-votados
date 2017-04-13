@@ -14,7 +14,7 @@ const Filter = ({ sortPostBackward, sortPostForward }) => {
     return (
         <Row>
             <Col>
-                <p>Orden: <Button bsStyle="primary" style={style.border} onClick={() => sortPostForward()}>Ascendente</Button> <Button bsStyle="primary" onClick={() => sortPostBackward()}>Descendente</Button></p>
+                <p>Orden: <Button style={style.border} onClick={() => sortPostForward()}>Ascendente</Button> <Button bsStyle="primary" onClick={() => sortPostBackward()}>Descendente</Button></p>
             </Col>
         </Row> 
     )
